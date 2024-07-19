@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSRIC AutoGen Chat</title>
+</head>
+<body>
+    <h1>OSRIC AutoGen Chat</h1>
+    <div>
+        <textarea id="userInput" rows="4" cols="50"></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="response"></div>
+    
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('userInput').value;
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ input: input })
+            });
+            const data = await response.json();
+            document.getElementById('response').innerText = data.response;
+        }
+    </script>
+</body>
+</html>
